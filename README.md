@@ -1,21 +1,33 @@
-DOCKER-DESKTOP
-==============
+GRASS GIS Docker
+================
 
 ##Description
 
-This Dockerfile creates a docker image and once it's executed it creates a container that runs X11 and SSH services.
-The ssh is used to forward X11 and provide you encrypted data communication between the docker container and your local machine.
+This Dockerfile creates a docker image and once it's executed it creates
+a container that runs X11 and SSH services.
+The ssh is used to forward X11 and provide you encrypted data
+communication between the docker container and your local machine.
 
-Xpra + Xephyr allows to display the applications running inside of the container such as Firefox, LibreOffice, xterm, etc. with recovery connection capabilities. Xpra also uses a custom protocol that is self-tuning and relatively latency-insensitive, and thus is usable over worse links than standard X.
+Xpra + Xephyr allows to display the applications running inside of
+the container such as GRASS GIS graphical user interface or xterm
+with recovery connection capabilities. Xpra also uses a custom protocol
+that is self-tuning and relatively latency-insensitive, and thus is
+usable over worse links than standard X.
 
-The applications can be rootless, so the client machine manages the windows that are displayed.
+The applications can be rootless, so the client machine manages
+the windows that are displayed.
 
-Fluxbox and ROX-Filer creates a very minimalist way to manages the windows and files. 
+Fluxbox and ROX-Filer creates a very minimalist way to manages
+the windows and files.
 
 
 ![Docker L](image/docker-desktop.png "Docker-Desktop")
 
-OBS: The client machine needs to have a X11 server installed (Xpra). See the "Notes" below. 
+OBS: The client machine needs to have a X11 server installed (Xpra). See the "Notes" below.
+
+##Warning
+
+Note that connections except for `ssh -X` were not tested.
 
 ##Docker Installation
 
@@ -103,11 +115,11 @@ Usage: docker-desktop [-s screen_size] [-d session_number]
 
 ```
 $ xpra --ssh="ssh -p 49153" attach ssh:docker@192.168.56.102:10 # user@ip_address:session_number
-docker@192.168.56.102's password: xxxxxxxxxxxx 
+docker@192.168.56.102's password: xxxxxxxxxxxx
 
 ```
-If you want to execute rootless programs, you just need to connect to the container via ssh and type: 
-DISPLAY=:[session_number] [program_name] & 
+If you want to execute rootless programs, you just need to connect to the container via ssh and type:
+DISPLAY=:[session_number] [program_name] &
 
 Eg. DISPLAY=:10 firefox &
 

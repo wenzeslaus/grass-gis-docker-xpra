@@ -1,24 +1,29 @@
 # This file creates a container that runs X11 and SSH services
 # The ssh is used to forward X11 and provide you encrypted data
-# communication between the docker container and your local 
+# communication between the docker container and your local
 # machine.
 #
 # Xpra allows to display the programs running inside of the
-# container such as Firefox, LibreOffice, xterm, etc. 
+# container such as Firefox, LibreOffice, xterm, etc.
 # with disconnection and reconnection capabilities
 #
 # Xephyr allows to display the programs running inside of the
-# container such as Firefox, LibreOffice, xterm, etc. 
+# container such as Firefox, LibreOffice, xterm, etc.
 #
-# Fluxbox and ROX-Filer creates a very minimalist way to 
+# Fluxbox and ROX-Filer creates a very minimalist way to
 # manages the windows and files.
 #
-# Author: Roberto Gandolfo Hashioka
-# Date: 07/28/2013
+# GRASS GIS is compiled and installed from 7.0 release branch from SVN.
+#
+# Authors:
+#   Roberto Gandolfo Hashioka (non-GRASS part, rogaha/docker-desktop)
+#   Vaclav Petras
 
 
 FROM ubuntu:14.04
-MAINTAINER Roberto G. Hashioka "roberto_hashioka@hotmail.com"
+MAINTAINER Vaclav Petras <wenzeslaus@gmail.com>
+
+ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update -y
 RUN apt-get upgrade -y
@@ -41,24 +46,29 @@ RUN sed -i 's/session    required     pam_loginuid.so/#session    required     p
 # Upstart and DBus have issues inside docker. We work around in order to install firefox.
 RUN dpkg-divert --local --rename --add /sbin/initctl && ln -sf /bin/true /sbin/initctl
 
-# Installing fuse package (libreoffice-java dependency) and it's going to try to create
-# a fuse device without success, due the container permissions. || : help us to ignore it. 
-# Then we are going to delete the postinst fuse file and try to install it again!
-# Thanks Jerome for helping me with this workaround solution! :)
-# Now we are able to install the libreoffice-java package  
-RUN apt-get -y install fuse  || :
-RUN rm -rf /var/lib/dpkg/info/fuse.postinst
-RUN apt-get -y install fuse
+RUN apt-get install -y xterm
 
-# Installing the apps: Firefox, flash player plugin, LibreOffice and xterm
-# libreoffice-base installs libreoffice-java mentioned before
-RUN apt-get install -y libreoffice-base firefox libreoffice-gtk libreoffice-calc xterm
+RUN sudo apt-get update
+RUN sudo apt-get upgrade
+
+# not used because repositories were somehow broken when tested
+# RUN apt-get install -y software-properties-common python-software-properties
+# RUN add-apt-repository -y ppa:ubuntugis/ubuntugis-unstable
+# RUN add-apt-repository -y ppa:grass/grass-devel
+# RUN apt-get update
+# RUN apt-get install -y grass70
 
 # Set locale (fix the locale warnings)
 RUN localedef -v -c -i en_US -f UTF-8 en_US.UTF-8 || :
 
 # Copy the files into the container
 ADD . /src
+
+RUN /bin/bash /src/grass_dependencies.sh
+
+WORKDIR /usr/local/src
+
+RUN /bin/bash /src/grass_compile.sh
 
 EXPOSE 22
 # Start xdm and ssh services.
