@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.x.x (2015-04-10)
+ + GRASS GIS compilation and install
+ - Removed LibreOffice
+
 ## 0.4.0 (2014-08-19)
  + OS: Upgraded from 12.10 to 14.04
  + Fixed Issue: Added a packet (Xvfb) to make the program work under ubuntu 14.04 (by @clu2)

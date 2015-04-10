@@ -20,6 +20,7 @@ the windows that are displayed.
 Fluxbox and ROX-Filer creates a very minimalist way to manages
 the windows and files.
 
+This repository was derived from: https://github.com/rogaha/docker-desktop
 
 ![Docker L](image/docker-desktop.png "Docker-Desktop")
 
