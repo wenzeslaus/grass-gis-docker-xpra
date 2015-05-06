@@ -3,6 +3,9 @@ GRASS GIS Docker
 
 ##Description
 
+This Dockerfile is intended to run contained GRASS GIS session remotely
+using SSH.
+
 This Dockerfile creates a docker image and once it's executed it creates
 a container that runs X11 and SSH services.
 The ssh is used to forward X11 and provide you encrypted data
@@ -59,19 +62,19 @@ Requirements:
 ###Building the docker image
 
 ```
-$ docker build -t [username]/docker-desktop git://github.com/rogaha/docker-desktop.git
+$ docker build -t [username]/docker-desktop git://github.com/wenzeslaus/grass-gis-docker.git
 
 OR
 
-$ git clone https://github.com/rogaha/docker-desktop.git
-$ cd docker-desktop
-$ docker build -t [username]/docker-desktop .
+$ git clone https://github.com/wenzeslaus/grass-gis-docker.git
+$ cd grass-gis-docker
+$ docker build -t [username]/grass-gis-docker .
 ```
 
 ###Running the docker image created (-d: detached mode, -P: expose the port 22 on the host machine)
 
 ```
-$ CONTAINER_ID=$(docker run -d -P [username]/docker-desktop)
+$ CONTAINER_ID=$(docker run -d -P [username]/grass-gis-docker)
 ```
 
 ###Getting the password generated during runtime
