@@ -49,7 +49,7 @@ RUN dpkg-divert --local --rename --add /sbin/initctl && ln -sf /bin/true /sbin/i
 RUN apt-get install -y xterm
 
 RUN sudo apt-get update
-RUN sudo apt-get upgrade
+RUN sudo apt-get -y upgrade
 
 # not used because repositories were somehow broken when tested
 # RUN apt-get install -y software-properties-common python-software-properties
