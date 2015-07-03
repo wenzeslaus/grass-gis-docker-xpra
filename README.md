@@ -127,6 +127,26 @@ DISPLAY=:[session_number] [program_name] &
 
 Eg. DISPLAY=:10 firefox &
 
+
+###Using the IPython Notebook server
+
+You have to get data to your conatiner by mounting volumes from host or another Docker container.
+Alternatively, you can create a new image based on this image and, for example, download the data in the Dockerfile.
+
+```
+docker run -d -P \
+    --name $cont_name \
+    -p 9000:8888 \
+    -w /notebooks \
+    -e "PASSWORD=kM7jzr79vniu4" \
+    -e "PEM_FILE=/key.pem" \
+    -e "USE_HTTP=0" \
+    ... (manage volumes) \
+    [username]/grass-gis-notebook \
+    grass71 /grassdata/nc_spm/user1 --exec /bin/bash /src/notebook.sh
+```
+
+
 ##Notes
 
 ###On Windows:

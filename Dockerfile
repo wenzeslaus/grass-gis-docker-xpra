@@ -46,7 +46,7 @@ RUN sed -i 's/session    required     pam_loginuid.so/#session    required     p
 # Upstart and DBus have issues inside docker. We work around in order to install firefox.
 RUN dpkg-divert --local --rename --add /sbin/initctl && ln -sf /bin/true /sbin/initctl
 
-RUN apt-get install -y xterm
+RUN apt-get install -y xterm ipython-notebook
 
 RUN sudo apt-get update
 RUN sudo apt-get -y upgrade
