@@ -132,6 +132,7 @@ Eg. DISPLAY=:10 firefox &
 
 You have to get data to your conatiner by mounting volumes from host or another Docker container.
 Alternatively, you can create a new image based on this image and, for example, download the data in the Dockerfile.
+In this example we expect GRASS Mapset `/grassdata/nc_spm/user1` to exist.
 
 ```
 docker run -d -P \
@@ -141,9 +142,10 @@ docker run -d -P \
     -e "PASSWORD=kM7jzr79vniu4" \
     -e "PEM_FILE=/key.pem" \
     -e "USE_HTTP=0" \
+    -e "GRASS_BATCH_JOB=/src/notebook.sh"
     ... (manage volumes) \
     [username]/grass-gis-notebook \
-    grass71 /grassdata/nc_spm/user1 --exec /bin/bash /src/notebook.sh
+    grass70 /grassdata/nc_spm/user1
 ```
 
 
